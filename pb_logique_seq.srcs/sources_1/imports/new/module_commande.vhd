@@ -23,8 +23,8 @@ end module_commande;
 
 ARCHITECTURE BEHAVIOR OF module_commande IS
     type sound_effect is (effect_a, effect_b, effect_c, effect_d);
-    signal current_sound_effect : sound_effect;
-    signal wanted_sound_effect : sound_effect;
+    signal current_distortion_effect : sound_effect;
+    signal wanted_distortion_effect : sound_effect;
 
 component conditionne_btn_v7 is
 generic (nbtn : integer := nbtn;  mode_simul: std_logic := '0');
@@ -63,24 +63,24 @@ BEGIN
  reset_manager : process(d_reset, clk)
     begin
         if d_reset = '1' then
-            current_sound_effect <= effect_a;
+            current_distortion_effect <= effect_a;
         elsif rising_edge(clk) then
             -- Wanted sound effect is outputed on every clock edge
-            current_sound_effect <= wanted_sound_effect;
+            current_distortion_effect <= wanted_distortion_effect;
         end if;
     end process;
 
-state_manager : process(clk, current_sound_effect, d_strobe_btn)
+state_manager : process(clk, current_distortion_effect, d_strobe_btn)
     begin
         if rising_edge(clk) then
-            case current_sound_effect is
+            case current_distortion_effect is
                 when effect_a =>
                     o_selection_fct <= "00";
                     case d_strobe_btn(1 downto 0) is
                         when "01" =>
-                            wanted_sound_effect <= effect_b;
+                            wanted_distortion_effect <= effect_b;
                         when "10" =>
-                            wanted_sound_effect <= effect_d;
+                            wanted_distortion_effect <= effect_d;
                         when others =>
                             -- Do nothing. It's not specified.
                     end case;
@@ -89,9 +89,9 @@ state_manager : process(clk, current_sound_effect, d_strobe_btn)
                     o_selection_fct <= "01";
                     case d_strobe_btn(1 downto 0) is
                         when "01" =>
-                            wanted_sound_effect <= effect_c;
+                            wanted_distortion_effect <= effect_c;
                         when "10" =>
-                            wanted_sound_effect <= effect_a;
+                            wanted_distortion_effect <= effect_a;
                         when others =>
                             -- Do nothing. It's not specified.
                     end case;
@@ -100,9 +100,9 @@ state_manager : process(clk, current_sound_effect, d_strobe_btn)
                     o_selection_fct <= "10";
                     case d_strobe_btn(1 downto 0) is
                         when "01" =>
-                            wanted_sound_effect <= effect_d;
+                            wanted_distortion_effect <= effect_d;
                         when "10" =>
-                            wanted_sound_effect <= effect_b;
+                            wanted_distortion_effect <= effect_b;
                         when others =>
                             -- Do nothing. It's not specified.
                     end case;
@@ -111,9 +111,9 @@ state_manager : process(clk, current_sound_effect, d_strobe_btn)
                     o_selection_fct <= "11";
                     case d_strobe_btn(1 downto 0) is
                         when "01" =>
-                            wanted_sound_effect <= effect_a;
+                            wanted_distortion_effect <= effect_a;
                         when "10" =>
-                            wanted_sound_effect <= effect_c;
+                            wanted_distortion_effect <= effect_c;
                         when others =>
                             -- Do nothing. It's not specified.
                     end case;
@@ -122,8 +122,7 @@ state_manager : process(clk, current_sound_effect, d_strobe_btn)
     end process;
  
    o_btn_cd        <= d_btn_cd;
-   o_selection_par <= i_sw(1 downto 0); -- mode de selection du parametre par sw
-   --o_selection_fct <= i_sw(3 downto 2); -- mode de selection de la fonction par sw
+   o_selection_par <= i_sw(1 downto 0); -- mode de selection du parametre par boutons
    d_reset         <= i_btn(3);         -- pas de contionnement particulier sur reset
 
 END BEHAVIOR;
