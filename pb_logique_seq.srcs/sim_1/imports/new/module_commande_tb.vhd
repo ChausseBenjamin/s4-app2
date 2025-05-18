@@ -115,14 +115,16 @@ d_reset <= d_btn(3);
 
 tb : PROCESS
    BEGIN
+      expected_status_code <= "00";
       d_sw  <= "0000";
       wait for 100 ns;  
       d_btn <= "1000", "0000" after 10 * c_clk_p_Period;  -- application reset sur btn3
       
-     -- Tests avec les interrupteurs
-     for i_sw in 0 to 15 loop
+     -- Tests de la sélection des paramètres 
+     for i_sw in 0 to 3 loop
           d_sw <= std_logic_vector(to_unsigned(i_sw,4));
-           wait for c_delai_commandes;  -- attendre delai
+          wait for c_delai_commandes;  -- attendre delai
+          expected_status_code <= std_logic_vector( unsigned(expected_status_code) + 1 );
       end loop;
       d_sw  <= "0000";
       
