@@ -25,9 +25,6 @@ ARCHITECTURE BEHAVIOR OF module_commande IS
     type sound_effect is (effect_a, effect_b, effect_c, effect_d);
     signal current_sound_effect : sound_effect;
     signal wanted_sound_effect : sound_effect;
---    signal increase_selection : std_logic;
---    signal decrease_selection : std_logic;
---    signal has_pressed_selection_already : std_logic;
 
 component conditionne_btn_v7 is
 generic (nbtn : integer := nbtn;  mode_simul: std_logic := '0');
@@ -43,8 +40,6 @@ end component;
     signal d_strobe_btn :    std_logic_vector (nbtn-1 downto 0);
     signal d_btn_cd     :    std_logic_vector (nbtn-1 downto 0); 
     signal d_reset      :    std_logic;
---    signal needs_to_increase : std_logic;
---    signal needs_to_decrease : std_logic;
    
 BEGIN 
 
@@ -74,37 +69,6 @@ BEGIN
             current_sound_effect <= wanted_sound_effect;
         end if;
     end process;
-    
---button_spam_manager : process(d_strobe_btn, d_reset, clk)
---    begin
---        if d_reset = '1' then
---            has_pressed_selection_already <= '0';
---            increase_selection <= '0';
---            decrease_selection <= '0';
---        elsif rising_edge(clk) then
---            -- Managing creating pulses for the button to avoid spam increasing states!
---            if (NOT (has_pressed_selection_already = '1')) AND ((d_strobe_btn(0) = '1') OR (d_strobe_btn(1) = '1')) then
---                -- No increase or decrease is called AND one of the buttons is pressed!
---                -- That means we can send a pulse to increase or decrease the counter.
---                has_pressed_selection_already <= '1';
---                if d_strobe_btn(0) = '1' then
---                    increase_selection <= '1';
---                    decrease_selection <= '0';
---                elsif d_strobe_btn(1) = '1' then
---                    decrease_selection <= '1';
---                    increase_selection <= '0';
---                end if;
---            else
---                increase_selection <= '0';
---                decrease_selection <= '0';
---            end if;
---        else
---            if ((d_strobe_btn(0) = '0') AND (d_strobe_btn(1) = '0')) then
---                -- no buttons is pressed. Therefor, we can start registering an increase or decrease again.
---                has_pressed_selection_already <= '0';
---            end if;
---        end if;
---    end process;
 
 state_manager : process(clk, current_sound_effect, d_strobe_btn)
     begin
