@@ -70,55 +70,60 @@ BEGIN
         end if;
     end process;
 
-state_manager : process(clk, current_distortion_effect, d_strobe_btn)
+state_manager : process(clk, current_distortion_effect, d_strobe_btn, d_reset)
     begin
-        if rising_edge(clk) then
-            case current_distortion_effect is
-                when effect_a =>
-                    o_selection_fct <= "00";
-                    case d_strobe_btn(1 downto 0) is
-                        when "01" =>
-                            wanted_distortion_effect <= effect_b;
-                        when "10" =>
-                            wanted_distortion_effect <= effect_d;
-                        when others =>
-                            -- Do nothing. It's not specified.
-                    end case;
-                
-                when effect_b =>
-                    o_selection_fct <= "01";
-                    case d_strobe_btn(1 downto 0) is
-                        when "01" =>
-                            wanted_distortion_effect <= effect_c;
-                        when "10" =>
-                            wanted_distortion_effect <= effect_a;
-                        when others =>
-                            -- Do nothing. It's not specified.
-                    end case;
-
-                when effect_c =>
-                    o_selection_fct <= "10";
-                    case d_strobe_btn(1 downto 0) is
-                        when "01" =>
-                            wanted_distortion_effect <= effect_d;
-                        when "10" =>
-                            wanted_distortion_effect <= effect_b;
-                        when others =>
-                            -- Do nothing. It's not specified.
-                    end case;
-                
-                when effect_d =>
-                    o_selection_fct <= "11";
-                    case d_strobe_btn(1 downto 0) is
-                        when "01" =>
-                            wanted_distortion_effect <= effect_a;
-                        when "10" =>
-                            wanted_distortion_effect <= effect_c;
-                        when others =>
-                            -- Do nothing. It's not specified.
-                    end case;
-            end case;
-        END IF;
+        if d_reset = '1' then
+            wanted_distortion_effect <= effect_a;
+            o_selection_fct <= "00";
+        else
+            if rising_edge(clk) then
+                case current_distortion_effect is
+                    when effect_a =>
+                        o_selection_fct <= "00";
+                        case d_strobe_btn(1 downto 0) is
+                            when "01" =>
+                                wanted_distortion_effect <= effect_b;
+                            when "10" =>
+                                wanted_distortion_effect <= effect_d;
+                            when others =>
+                                -- Do nothing. It's not specified.
+                        end case;
+                    
+                    when effect_b =>
+                        o_selection_fct <= "01";
+                        case d_strobe_btn(1 downto 0) is
+                            when "01" =>
+                                wanted_distortion_effect <= effect_c;
+                            when "10" =>
+                                wanted_distortion_effect <= effect_a;
+                            when others =>
+                                -- Do nothing. It's not specified.
+                        end case;
+    
+                    when effect_c =>
+                        o_selection_fct <= "10";
+                        case d_strobe_btn(1 downto 0) is
+                            when "01" =>
+                                wanted_distortion_effect <= effect_d;
+                            when "10" =>
+                                wanted_distortion_effect <= effect_b;
+                            when others =>
+                                -- Do nothing. It's not specified.
+                        end case;
+                    
+                    when effect_d =>
+                        o_selection_fct <= "11";
+                        case d_strobe_btn(1 downto 0) is
+                            when "01" =>
+                                wanted_distortion_effect <= effect_a;
+                            when "10" =>
+                                wanted_distortion_effect <= effect_c;
+                            when others =>
+                                -- Do nothing. It's not specified.
+                        end case;
+                end case;
+            end if;
+        end if;
     end process;
  
    o_btn_cd        <= d_btn_cd;

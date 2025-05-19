@@ -135,7 +135,7 @@ tb : PROCESS
           assert (d_sel_fct = expected_status_code)
             report "L'etat n'est pas S0 après la reinitialisation"
             severity WARNING;
-      for index_btn in 0 to 7 loop
+      for index_btn in 0 to 8 loop
           wait for c_delai_commandes;  -- attendre delai
           d_btn <= "0001";
           wait for c_delai_commandes;  -- attendre delai
@@ -146,7 +146,7 @@ tb : PROCESS
             report "L'etat n'est pas celui attendu"
             severity WARNING;
       end loop;
-      for index_btn in 0 to 7 loop
+      for index_btn in 0 to 9 loop
           wait for c_delai_commandes;  -- attendre delai
           d_btn <= "0010";
           wait for c_delai_commandes;  -- attendre delai
@@ -164,9 +164,16 @@ tb : PROCESS
           -- Pas de assert ici - on explore le comportement d'une condition particuliere
       end loop;
 
+     -- Test de reset quand la sélection n'est pas 0.
+     wait for c_delai_commandes;
+     d_btn <= "1000";
+     expected_status_code <= "00";
+     wait for c_delai_commandes;
+     wait for c_delai_commandes;
 
       d_sw  <= "0000";
       d_btn <= "0000";
+      expected_status_code <= "00";
       
       WAIT; -- will wait forever
    END PROCESS;
