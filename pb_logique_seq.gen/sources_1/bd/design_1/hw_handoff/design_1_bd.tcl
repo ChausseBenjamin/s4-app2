@@ -51,7 +51,6 @@ if { [string first $scripts_vivado_version $current_vivado_version] == -1 } {
 set list_projs [get_projects -quiet]
 if { $list_projs eq "" } {
    create_project project_1 myproj -part xc7z010clg400-1
-   set_property BOARD_PART digilentinc.com:zybo-z7-10:part0:1.0 [current_project]
 }
 
 
@@ -235,7 +234,6 @@ proc create_hier_cell_M9_codeur_i2s { parentCell nameHier } {
   set_property -dict [ list \
    CONFIG.C_OPERATION {or} \
    CONFIG.C_SIZE {1} \
-   CONFIG.LOGO_FILE {data/sym_orgate.png} \
  ] $util_vector_logic_0
 
   # Create instance: xlconcat_0, and set properties
@@ -380,6 +378,9 @@ proc create_hier_cell_M1_decodeur_i2s { parentCell nameHier } {
   
   # Create instance: xlconstant_0, and set properties
   set xlconstant_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_0 ]
+  set_property -dict [ list \
+   CONFIG.CONST_VAL {0} \
+ ] $xlconstant_0
 
   # Create instance: xlconstant_1, and set properties
   set xlconstant_1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:xlconstant:1.1 xlconstant_1 ]

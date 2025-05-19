@@ -7,7 +7,8 @@
       "name": "design_1",
       "rev_ctrl_bd_flag": "RevCtrlBdOff",
       "synth_flow_mode": "Hierarchical",
-      "tool_version": "2020.2"
+      "tool_version": "2020.2",
+      "validated": "true"
     },
     "design_tree": {
       "M1_decodeur_i2s": {
@@ -62,8 +63,24 @@
         "type": "clk",
         "direction": "I",
         "parameters": {
+          "CLK_DOMAIN": {
+            "value": "design_1_clk_100MHz",
+            "value_src": "default"
+          },
           "FREQ_HZ": {
             "value": "100000000"
+          },
+          "FREQ_TOLERANCE_HZ": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "INSERT_VIP": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "PHASE": {
+            "value": "0.000",
+            "value_src": "default"
           }
         }
       },
@@ -126,7 +143,7 @@
           "compteur_7bits": {
             "vlnv": "xilinx.com:module_ref:compteur_nbits:1.0",
             "xci_name": "design_1_compteur_7bits_0",
-            "xci_path": "ip/design_1_compteur_7bits_0/design_1_compteur_7bits_0.xci",
+            "xci_path": "ip\\design_1_compteur_7bits_0\\design_1_compteur_7bits_0.xci",
             "inst_hier_path": "M1_decodeur_i2s/compteur_7bits",
             "parameters": {
               "nbits": {
@@ -174,7 +191,7 @@
           "MEF_decodeur_i2s": {
             "vlnv": "xilinx.com:module_ref:mef_decod_i2s_v1b:1.0",
             "xci_name": "design_1_MEF_decodeur_i2s_0",
-            "xci_path": "ip/design_1_MEF_decodeur_i2s_0/design_1_MEF_decodeur_i2s_0.xci",
+            "xci_path": "ip\\design_1_MEF_decodeur_i2s_0\\design_1_MEF_decodeur_i2s_0.xci",
             "inst_hier_path": "M1_decodeur_i2s/MEF_decodeur_i2s",
             "reference_info": {
               "ref_type": "hdl",
@@ -232,7 +249,7 @@
           "registre_24bits_droite": {
             "vlnv": "xilinx.com:module_ref:reg_24b:1.0",
             "xci_name": "design_1_registre_24bits_droite_0",
-            "xci_path": "ip/design_1_registre_24bits_droite_0/design_1_registre_24bits_droite_0.xci",
+            "xci_path": "ip\\design_1_registre_24bits_droite_0\\design_1_registre_24bits_droite_0.xci",
             "inst_hier_path": "M1_decodeur_i2s/registre_24bits_droite",
             "reference_info": {
               "ref_type": "hdl",
@@ -280,7 +297,7 @@
           "registre_24bits_gauche": {
             "vlnv": "xilinx.com:module_ref:reg_24b:1.0",
             "xci_name": "design_1_registre_24bits_gauche_0",
-            "xci_path": "ip/design_1_registre_24bits_gauche_0/design_1_registre_24bits_gauche_0.xci",
+            "xci_path": "ip\\design_1_registre_24bits_gauche_0\\design_1_registre_24bits_gauche_0.xci",
             "inst_hier_path": "M1_decodeur_i2s/registre_24bits_gauche",
             "reference_info": {
               "ref_type": "hdl",
@@ -328,7 +345,7 @@
           "registre_decalage_24bits": {
             "vlnv": "xilinx.com:module_ref:reg_dec_24b:1.0",
             "xci_name": "design_1_registre_decalage_24bits_0",
-            "xci_path": "ip/design_1_registre_decalage_24bits_0/design_1_registre_decalage_24bits_0.xci",
+            "xci_path": "ip\\design_1_registre_decalage_24bits_0\\design_1_registre_decalage_24bits_0.xci",
             "inst_hier_path": "M1_decodeur_i2s/registre_decalage_24bits",
             "reference_info": {
               "ref_type": "hdl",
@@ -382,13 +399,18 @@
           "xlconstant_0": {
             "vlnv": "xilinx.com:ip:xlconstant:1.1",
             "xci_name": "design_1_xlconstant_0_0",
-            "xci_path": "ip/design_1_xlconstant_0_0_1/design_1_xlconstant_0_0.xci",
-            "inst_hier_path": "M1_decodeur_i2s/xlconstant_0"
+            "xci_path": "ip\\design_1_xlconstant_0_0_1\\design_1_xlconstant_0_0.xci",
+            "inst_hier_path": "M1_decodeur_i2s/xlconstant_0",
+            "parameters": {
+              "CONST_VAL": {
+                "value": "0"
+              }
+            }
           },
           "xlconstant_1": {
             "vlnv": "xilinx.com:ip:xlconstant:1.1",
             "xci_name": "design_1_xlconstant_1_0",
-            "xci_path": "ip/design_1_xlconstant_1_0/design_1_xlconstant_1_0.xci",
+            "xci_path": "ip\\design_1_xlconstant_1_0\\design_1_xlconstant_1_0.xci",
             "inst_hier_path": "M1_decodeur_i2s/xlconstant_1",
             "parameters": {
               "CONST_WIDTH": {
@@ -531,7 +553,7 @@
           "compteur_nbits_0": {
             "vlnv": "xilinx.com:module_ref:compteur_nbits:1.0",
             "xci_name": "design_1_compteur_nbits_0_0",
-            "xci_path": "ip/design_1_compteur_nbits_0_0_1/design_1_compteur_nbits_0_0.xci",
+            "xci_path": "ip\\design_1_compteur_nbits_0_0_1\\design_1_compteur_nbits_0_0.xci",
             "inst_hier_path": "M9_codeur_i2s/compteur_nbits_0",
             "parameters": {
               "nbits": {
@@ -579,7 +601,7 @@
           "mef_cod_i2s_vsb_0": {
             "vlnv": "xilinx.com:module_ref:mef_cod_i2s_vsb:1.0",
             "xci_name": "design_1_mef_cod_i2s_vsb_0_0",
-            "xci_path": "ip/design_1_mef_cod_i2s_vsb_0_0_1/design_1_mef_cod_i2s_vsb_0_0.xci",
+            "xci_path": "ip\\design_1_mef_cod_i2s_vsb_0_0_1\\design_1_mef_cod_i2s_vsb_0_0.xci",
             "inst_hier_path": "M9_codeur_i2s/mef_cod_i2s_vsb_0",
             "reference_info": {
               "ref_type": "hdl",
@@ -654,7 +676,7 @@
           "mux2_0": {
             "vlnv": "xilinx.com:module_ref:mux2:1.0",
             "xci_name": "design_1_mux2_0_0",
-            "xci_path": "ip/design_1_mux2_0_0_1/design_1_mux2_0_0.xci",
+            "xci_path": "ip\\design_1_mux2_0_0_1\\design_1_mux2_0_0.xci",
             "inst_hier_path": "M9_codeur_i2s/mux2_0",
             "reference_info": {
               "ref_type": "hdl",
@@ -693,7 +715,7 @@
           "reg_dec_24b_fd_0": {
             "vlnv": "xilinx.com:module_ref:reg_dec_24b_fd:1.0",
             "xci_name": "design_1_reg_dec_24b_fd_0_0",
-            "xci_path": "ip/design_1_reg_dec_24b_fd_0_0_1/design_1_reg_dec_24b_fd_0_0.xci",
+            "xci_path": "ip\\design_1_reg_dec_24b_fd_0_0_1\\design_1_reg_dec_24b_fd_0_0.xci",
             "inst_hier_path": "M9_codeur_i2s/reg_dec_24b_fd_0",
             "reference_info": {
               "ref_type": "hdl",
@@ -757,7 +779,7 @@
           "util_vector_logic_0": {
             "vlnv": "xilinx.com:ip:util_vector_logic:2.0",
             "xci_name": "design_1_util_vector_logic_0_0",
-            "xci_path": "ip/design_1_util_vector_logic_0_0_1/design_1_util_vector_logic_0_0.xci",
+            "xci_path": "ip\\design_1_util_vector_logic_0_0_1\\design_1_util_vector_logic_0_0.xci",
             "inst_hier_path": "M9_codeur_i2s/util_vector_logic_0",
             "parameters": {
               "C_OPERATION": {
@@ -771,19 +793,19 @@
           "xlconcat_0": {
             "vlnv": "xilinx.com:ip:xlconcat:2.1",
             "xci_name": "design_1_xlconcat_0_0",
-            "xci_path": "ip/design_1_xlconcat_0_0_1/design_1_xlconcat_0_0.xci",
+            "xci_path": "ip\\design_1_xlconcat_0_0_1\\design_1_xlconcat_0_0.xci",
             "inst_hier_path": "M9_codeur_i2s/xlconcat_0"
           },
           "xlconstant_0": {
             "vlnv": "xilinx.com:ip:xlconstant:1.1",
             "xci_name": "design_1_xlconstant_0_1",
-            "xci_path": "ip/design_1_xlconstant_0_1_1/design_1_xlconstant_0_1.xci",
+            "xci_path": "ip\\design_1_xlconstant_0_1_1\\design_1_xlconstant_0_1.xci",
             "inst_hier_path": "M9_codeur_i2s/xlconstant_0"
           },
           "xlslice_0": {
             "vlnv": "xilinx.com:ip:xlslice:1.0",
             "xci_name": "design_1_xlslice_0_0",
-            "xci_path": "ip/design_1_xlslice_0_0_1/design_1_xlslice_0_0.xci",
+            "xci_path": "ip\\design_1_xlslice_0_0_1\\design_1_xlslice_0_0.xci",
             "inst_hier_path": "M9_codeur_i2s/xlslice_0",
             "parameters": {
               "DIN_FROM": {
@@ -909,7 +931,7 @@
       "M10_conversion_affichage": {
         "vlnv": "xilinx.com:module_ref:affhexPmodSSD_v3:1.0",
         "xci_name": "design_1_M10_conversion_affichage_0",
-        "xci_path": "ip/design_1_M10_conversion_affichage_0/design_1_M10_conversion_affichage_0.xci",
+        "xci_path": "ip\\design_1_M10_conversion_affichage_0\\design_1_M10_conversion_affichage_0.xci",
         "inst_hier_path": "M10_conversion_affichage",
         "reference_info": {
           "ref_type": "hdl",
@@ -959,7 +981,7 @@
       "M5_parametre_1": {
         "vlnv": "xilinx.com:module_ref:calcul_param_1:1.0",
         "xci_name": "design_1_M5_parametre_1_0",
-        "xci_path": "ip/design_1_M5_parametre_1_0/design_1_M5_parametre_1_0.xci",
+        "xci_path": "ip\\design_1_M5_parametre_1_0\\design_1_M5_parametre_1_0.xci",
         "inst_hier_path": "M5_parametre_1",
         "reference_info": {
           "ref_type": "hdl",
@@ -1006,7 +1028,7 @@
       "M6_parametre_2": {
         "vlnv": "xilinx.com:module_ref:calcul_param_2:1.0",
         "xci_name": "design_1_M6_parametre_2_0",
-        "xci_path": "ip/design_1_M6_parametre_2_0/design_1_M6_parametre_2_0.xci",
+        "xci_path": "ip\\design_1_M6_parametre_2_0\\design_1_M6_parametre_2_0.xci",
         "inst_hier_path": "M6_parametre_2",
         "reference_info": {
           "ref_type": "hdl",
@@ -1053,7 +1075,7 @@
       "M7_parametre_3": {
         "vlnv": "xilinx.com:module_ref:calcul_param_3:1.0",
         "xci_name": "design_1_M7_parametre_3_0",
-        "xci_path": "ip/design_1_M7_parametre_3_0/design_1_M7_parametre_3_0.xci",
+        "xci_path": "ip\\design_1_M7_parametre_3_0\\design_1_M7_parametre_3_0.xci",
         "inst_hier_path": "M7_parametre_3",
         "reference_info": {
           "ref_type": "hdl",
@@ -1100,7 +1122,7 @@
       "Multiplexeur_choix_fonction": {
         "vlnv": "xilinx.com:module_ref:mux4:1.0",
         "xci_name": "design_1_Multiplexeur_choix_fonction_0",
-        "xci_path": "ip/design_1_Multiplexeur_choix_fonction_0/design_1_Multiplexeur_choix_fonction_0.xci",
+        "xci_path": "ip\\design_1_Multiplexeur_choix_fonction_0\\design_1_Multiplexeur_choix_fonction_0.xci",
         "inst_hier_path": "Multiplexeur_choix_fonction",
         "reference_info": {
           "ref_type": "hdl",
@@ -1143,7 +1165,7 @@
       "Multiplexeur_choix_parametre": {
         "vlnv": "xilinx.com:module_ref:mux4:1.0",
         "xci_name": "design_1_Multiplexeur_choix_parametre_0",
-        "xci_path": "ip/design_1_Multiplexeur_choix_parametre_0/design_1_Multiplexeur_choix_parametre_0.xci",
+        "xci_path": "ip\\design_1_Multiplexeur_choix_parametre_0\\design_1_Multiplexeur_choix_parametre_0.xci",
         "inst_hier_path": "Multiplexeur_choix_parametre",
         "parameters": {
           "input_length": {
@@ -1191,7 +1213,7 @@
       "M4_fonction3": {
         "vlnv": "xilinx.com:module_ref:sig_fct_3:1.0",
         "xci_name": "design_1_M4_fonction3_0",
-        "xci_path": "ip/design_1_M4_fonction3_0/design_1_M4_fonction3_0.xci",
+        "xci_path": "ip\\design_1_M4_fonction3_0\\design_1_M4_fonction3_0.xci",
         "inst_hier_path": "M4_fonction3",
         "reference_info": {
           "ref_type": "hdl",
@@ -1214,7 +1236,7 @@
       "M2_fonction_distortion_dure1": {
         "vlnv": "xilinx.com:module_ref:sig_fct_sat_dure:1.0",
         "xci_name": "design_1_M2_fonction_distortion_dure1_0",
-        "xci_path": "ip/design_1_M2_fonction_distortion_dure1_0/design_1_M2_fonction_distortion_dure1_0.xci",
+        "xci_path": "ip\\design_1_M2_fonction_distortion_dure1_0\\design_1_M2_fonction_distortion_dure1_0.xci",
         "inst_hier_path": "M2_fonction_distortion_dure1",
         "parameters": {
           "c_ech_u24_max": {
@@ -1242,7 +1264,7 @@
       "M3_fonction_distorsion_dure2": {
         "vlnv": "xilinx.com:module_ref:sig_fct_sat_dure:1.0",
         "xci_name": "design_1_M3_fonction_distorsion_dure2_0",
-        "xci_path": "ip/design_1_M3_fonction_distorsion_dure2_0/design_1_M3_fonction_distorsion_dure2_0.xci",
+        "xci_path": "ip\\design_1_M3_fonction_distorsion_dure2_0\\design_1_M3_fonction_distorsion_dure2_0.xci",
         "inst_hier_path": "M3_fonction_distorsion_dure2",
         "reference_info": {
           "ref_type": "hdl",
@@ -1265,7 +1287,7 @@
       "parametre_0": {
         "vlnv": "xilinx.com:ip:xlconstant:1.1",
         "xci_name": "design_1_parametre_0_0",
-        "xci_path": "ip/design_1_parametre_0_0/design_1_parametre_0_0.xci",
+        "xci_path": "ip\\design_1_parametre_0_0\\design_1_parametre_0_0.xci",
         "inst_hier_path": "parametre_0",
         "parameters": {
           "CONST_VAL": {
@@ -1279,7 +1301,7 @@
       "M8_commande": {
         "vlnv": "xilinx.com:module_ref:module_commande:1.0",
         "xci_name": "design_1_M8_commande_0",
-        "xci_path": "ip/design_1_M8_commande_0/design_1_M8_commande_0.xci",
+        "xci_path": "ip\\design_1_M8_commande_0\\design_1_M8_commande_0.xci",
         "inst_hier_path": "M8_commande",
         "reference_info": {
           "ref_type": "hdl",
@@ -1498,7 +1520,7 @@
     },
     "comments": {
       "/": {
-        "comment_1": "Modules Ã  modifier:\nMEF_decodeur_i2s (dans M1_decodeur_i2s)\nM5_parametre_1\nM6_parametre_2\nM8_commande\nPour plus de clartÃ©, vous pouvez cacher les fils pour les horloges\net les resets dans les paramÃ¨tres (engrenage en haut a droite de cette fenÃªtre).\n"
+        "comment_1": "Modules à modifier:\nMEF_decodeur_i2s (dans M1_decodeur_i2s)\nM5_parametre_1\nM6_parametre_2\nM8_commande\nPour plus de clarté, vous pouvez cacher les fils pour les horloges\net les resets dans les paramètres (engrenage en haut a droite de cette fenêtre).\n"
       }
     }
   }

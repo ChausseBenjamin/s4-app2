@@ -111,10 +111,10 @@ begin
         return x"000000";
     end if;
 end nextRightInput;
- 
+
     signal   d_ac_bclk     : std_logic := '0';   -- bit clock ... horloge I2S digital audio
     signal   d_ac_mclk     : std_logic := '0';   -- Master Clock horloge 12.288 MHz
-    signal   d_cpt_mclk    : std_logic_vector (7 downto 0) := "00000000";
+    signal   d_cpt_mclk    : std_logic_vector (7 downto 0) := "00000000"; -- counts each pulse of the master clock.
     
     signal   d_ac_pbdat    : std_logic := '0';   -- I²S (Playback Data)
     signal   d_sig_pbdat   : std_logic;   -- I²S (Playback Data)
@@ -190,7 +190,7 @@ begin
           clk      =>  d_ac_bclk,
           i_reset     =>  s_reset,
           i_lrc       =>  d_ac_pblrc,
-          i_data       =>  d_sig_pbdat,
+          i_data       =>  d_ac_pbdat,--d_sig_pbdat,
           o_dat_left  =>  d_ech_reg_left,
           o_dat_right =>  d_ech_reg_right,
           o_str_dat   =>  open
