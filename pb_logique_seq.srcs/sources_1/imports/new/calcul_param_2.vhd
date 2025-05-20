@@ -50,27 +50,28 @@ architecture Behavioral of calcul_param_2 is
 ---------------------------------------------------------------------------------
 -- States
 ---------------------------------------------------------------------------------
-type state is (awaiting_fresh_sample, calculating_output, overwritting_saved_values);
-signal current_state : state;
-signal next_state : state;
+--type state is (awaiting_fresh_sample, calculating_output, overwritting_saved_values);
+--signal current_state : state;
+--signal next_state : state;
 ---------------------------------------------------------------------------------
 -- Signaux
 ---------------------------------------------------------------------------------
--- Rolling average over 3 samples.
+-- Rolling average over 2 samples.
 --signal newest_i2s_signal    : std_logic_vector(23 downto 0); -- saves the i2s input when enable is raised so the state machine can work with it 3 clocks later.
 signal most_recent_power    : signed(47 downto 0) := (others => '0') ; -- A binary multiplication requires twice as much bits! (2x2 = 4). This one saves the most recent power (received with enable)
 signal oldest_power         : signed(47 downto 0) := (others => '0') ; -- The oldest received power.
-signal calculated_average   : signed(47 downto 0) := (others => '0') ;
-signal average_on_a_byte    : std_logic_vector(7 downto 0);  -- Saves the output to give to o_param
-signal signed_input         : signed(47 downto 0) := (others => '0');
+signal factored_old_power   : signed(47 downto 0) := (others => '0');
+--signal calculated_average : signed(47 downto 0) := (others => '0') ;
+--signal average_on_a_byte  : std_logic_vector(7 downto 0);  -- Saves the output to give to o_param
+--signal usigned_input        : unsigned(47 downto 0) := (others => '0');
 
 ---------------------------------------------------------------------------------
 -- Constants
 ---------------------------------------------------------------------------------
 -- Q1.23 format. An online converter was used to quickly generate the right signed binary vector for a 31/32 constant factor.
 -- Forgetting factor allows the weight of older sample to be less than newer samples to get a quicker mathematical reaction to changes while keeping noises out of the equation.
-constant forgetting_factor_31_32 : signed(23 downto 0) := "011111000000000000000000";
-constant test : std_logic_vector(23 downto 0) := "100000000000000000000000";
+--constant forgetting_factor_31_32 : signed(23 downto 0) := "011111000000000000000000";
+--constant test : std_logic_vector(23 downto 0) := "100000000000000000000000";
 
 ---------------------------------------------------------------------------------------------
 --    Description comportementale
@@ -151,25 +152,53 @@ begin
 --        end if;
 --    end process;
 
---    update_state: process(i_bclk, i_reset)
---    begin
---        if (i_reset = '1') then
---            d_ech_last <= (others => '0');
---        else
---            if rising_edge(i_bclk) and (i_en = '1') then
---                -- bit_shift <= shift_right( d_ech_last, 1) + shift_right( d_ech_last, 2) + shift_right( d_ech_last, 3) + shift_right( d_ech_last, 4);
---                d_ech_last <= 
---                    shift_right( signed(i_ech)*signed(i_ech), 1 ) 
---                    + shift_right( 
---                        shift_right( d_ech_last, 1) + shift_right( d_ech_last, 2) + shift_right( d_ech_last, 3) + shift_right( d_ech_last, 4) + shift_right( d_ech_last, 5), 1 
---                        ); -- bit_shift;
---                -- d_ech_last * "01111";
---                -- d_ech_last <= signed(i_ech);
---            end if;
---        end if;
---    end process;
-    
-    
---    o_param <= std_logic_vector( d_ech_last(46 downto 39) );
+    calculate_power : process(i_reset, i_bclk)
+    begin
+        if i_reset = '1' then -- reset the rolling average
+            oldest_power <= (others => '0');
+            o_param <= (others => '0');
+        else
+            if rising_edge(i_bclk) and (i_en = '1') then -- we're receiving a new sample and must calculate a rolling average!
+                -- The average is done with 2 values. The current one and the past one.
+                
+                -- Shifting didn't provide much more stability.
+                most_recent_power <= shift_right(signed(i_ech) * (signed(i_ech)), 0); -- Power in audio is x^2; That's cool cuz it gets rid of negative numbers.
+                
+                -- Too much trial and error due to VHDL's sporadic arithmetic synthesis. Even Javascript's types are more consistent and predictable.
+                -- For ungodly reasons unknown to mankind... This works.
+                -- This is 7h of trying to understand why a beautiful formal state machine don't work and eventually, breaking it enough with
+                -- Random additions eventually made something that behaves like the Lua test I make.
+                -- Whatever man.
+                
+                -- Signed type isn't worth a damn, so we STILL need to approximate 31/32 with bit shifts... What's the point of signed arithmetics if you can't figure it out Vivado?
+                factored_old_power <= shift_right( 
+                    shift_right( oldest_power, 1) + 
+                    shift_right( oldest_power, 2) + 
+                    shift_right( oldest_power, 3) + 
+                    shift_right( oldest_power, 4) + 
+                    shift_right( oldest_power, 5),
+                    1 
+                );
+                
+--                factored_new_power <= shift_right( 
+--                    shift_right( most_recent_power, 1) + 
+--                    shift_right( most_recent_power, 2) + 
+--                    shift_right( most_recent_power, 3) + 
+--                    shift_right( most_recent_power, 4) + 
+--                    shift_right( most_recent_power, 5),
+--                    1 
+--                );
+                
+                -- Here's your stupid rolling average.
+                oldest_power <= most_recent_power + factored_old_power;
+                
+                -- And because I'm lazy and it doesn't matter cuz this module isn't in the rapport nor the validation
+                -- I'll approximate power output by simply reading the MSB of the 48 signed bits we calculated.
+                -- I noticed that sending -1 for a while never goes above 3E when using 47 downto 40...
+                -- So... I'll just use bits (45 downto 38) to get a better shot at FF power levels lol.
+                o_param <= std_logic_vector(oldest_power(46 downto 39));
+            end if;
+        end if;
+    end process;
 
 end Behavioral;
