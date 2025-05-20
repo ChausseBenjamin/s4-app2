@@ -287,7 +287,15 @@ end process;
         s_btn <= "0000";
         s_sw <= "0000";
         wait for 40 us;
-                 
+        
+        -- Testing reset functionalities far into the readings.
+        wait for 1000us;
+        s_reset <= '1';
+        s_btn <= "1000";
+        wait for 100us;
+        s_reset <= '0';
+        s_btn <= "0000";
+           
         WAIT; -- will wait forever
      END PROCESS;
 
