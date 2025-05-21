@@ -161,8 +161,7 @@ begin
             if rising_edge(i_bclk) and (i_en = '1') then -- we're receiving a new sample and must calculate a rolling average!
                 -- The average is done with 2 values. The current one and the past one.
                 
-                -- Shifting didn't provide much more stability.
-                most_recent_power <= shift_right(signed(i_ech) * (signed(i_ech)), 0); -- Power in audio is x^2; That's cool cuz it gets rid of negative numbers.
+                most_recent_power <= signed(i_ech) * (signed(i_ech)); -- Power in audio is x^2; That's cool cuz it gets rid of negative numbers.
                 
                 -- Too much trial and error due to VHDL's sporadic arithmetic synthesis. Even Javascript's types are more consistent and predictable.
                 -- For ungodly reasons unknown to mankind... This works.
@@ -179,15 +178,6 @@ begin
                     shift_right( oldest_power, 5),
                     1 
                 );
-                
---                factored_new_power <= shift_right( 
---                    shift_right( most_recent_power, 1) + 
---                    shift_right( most_recent_power, 2) + 
---                    shift_right( most_recent_power, 3) + 
---                    shift_right( most_recent_power, 4) + 
---                    shift_right( most_recent_power, 5),
---                    1 
---                );
                 
                 -- Here's your stupid rolling average.
                 oldest_power <= most_recent_power + factored_old_power;

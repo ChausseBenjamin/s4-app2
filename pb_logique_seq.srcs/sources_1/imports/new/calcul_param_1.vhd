@@ -140,14 +140,14 @@ begin
       when check_sign_change =>
         case prev_sample_was_neg is
           when '1' =>
-            if (cache_avg > 0) and (since_last_zero /= since_2nd_last_zero) then
+            if (cache_avg > 0) then
               prev_sample_was_neg <= not prev_sample_was_neg;
               next_state <= update_freq;
             else
               next_state <= await_sample;
             end if;
           when '0' =>
-            if (cache_avg < 0) and (since_last_zero /= since_2nd_last_zero) then
+            if (cache_avg < 0) then
               prev_sample_was_neg <= not prev_sample_was_neg;
               next_state <= update_freq;
             else
