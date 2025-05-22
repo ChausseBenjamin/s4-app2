@@ -1,7 +1,7 @@
 \section{Module M6}
 
 \note{votre lecteur ne connait pas votre démarche ni
-pourquoi un tel résultat démontre le bon fonctionnement – vous devez l’expliquez brièvement.}
+pourquoi un tel résultat démontre le bon fonctionnement – vous devez l'expliquez brièvement.}
 
 \note{Nous ne consulterons pas le dépôt de vos fichiers Xilinx (sauf
 dans des cas particuliers) ce qui signifie que votre rapport doit être complet en lui-même.}
@@ -10,8 +10,25 @@ dans des cas particuliers) ce qui signifie que votre rapport doit être complet 
 
 \todo{Schéma-bloc du système}
 
-\todo{Description sommaire du fonctionnement}
+\subsection{Description du fonctionnement}
 
+Le module M6 effectue une estimation de la puissance du signal audio en
+appliquant une moyenne glissante exponentielle sur les échantillons entrants.
+Le calcul est déclenché à chaque front montant de l'horloge \verb|i_bclk|, si
+le signal d'activation \verb|i_en| est à 1.\\
+
+À chaque activation, la puissance instantanée est obtenue en élevant au carré
+l'échantillon courant \verb|i_ech|. Cette valeur est ensuite combinée avec la
+puissance historique pondérée, laquelle est approximée par un facteur de
+31/32 via un ensemble de décalages binaires successifs (équivalent à un
+filtrage passe-bas exponentiel).\\
+
+Le résultat de cette moyenne glissante est accumulé dans le registre
+\verb|oldest_power|, et la sortie \verb|o_param| correspond à une portion des
+bits de poids fort de cette somme, servant d'estimation compacte de la
+puissance audio pour affichage ou traitement subséquent.\\
+
+% \todo{Description sommaire du fonctionnement}
 \todo{Plan de vérification}
 
 \todo{Validation via une simulation avec le banc de test fourni. Vous devez démontrer le
