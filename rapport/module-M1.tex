@@ -62,22 +62,22 @@ fonctionnement repose sur une machine à états finis synchronisée par
 l'horloge bit \verb|i_bclk|.\\
 
 Le module débute dans l'état \verb|awaiting_lrc_front_change|, où il détecte
-une transition sur le signal de sélection de mot \verb|i_lrc|, indiquant le
-début d'un nouveau mot audio (24 bits). Lorsqu'une transition est détectée,
-le compteur de bits est réinitialisé, et l'état passe à
-\verb|reading_24bit_word|.\\
+une transition sur le signal de sélection de mot \verb|i_lrc|. Lorsqu'une transition
+est détectée, le compteur de bits et le registre à décalage sont réinitialisés,
+et l'état passe à \verb|reading_24bit_word|.\\
 
 Dans cet état, les bits sont captés en série à chaque front d'horloge et
-décalés dans un registre. Une fois les 23 premiers bits lus (le bit 0 étant
-le premier), le décodeur passe à l'état \verb|saving_received_word|, où il
-déclenche le chargement du mot complet dans un registre parallèle : vers
-\verb|o_load_left| si le mot correspond au canal gauche (\verb|i_lrc| = 0),
-ou vers \verb|o_load_right| si c'est le canal droit (\verb|i_lrc| = 1). \\
+décalés dans un registre. Une fois 23 bits reçus (le bit 0 étant le premier),
+le décodeur passe à l'état \verb|saving_received_word|, où il déclenche le chargement
+du mot complet dans un registre parallèle : vers \verb|o_load_left| si le mot
+correspond au canal gauche (\verb|i_lrc| = 0), ou vers \verb|o_load_right| si
+c'est le canal droit (\verb|i_lrc| = 1).\\
 
-Finalement, l'état \verb|setting_str_dat| produit une impulsion de validation
-(\verb|o_str_dat|) avant de revenir à l'attente d'un nouveau mot. Ce fonctionnement
-assure une synchronisation robuste et un découpage clair entre la détection,
-la réception et l'enregistrement des données audio. \\
+Finalement, l'état bascule à \verb|setting_str_dat| et active le signal \verb|o_str_dat| si le mot
+appartient au canal droit. Ce signal sert à synchroniser les modules en aval,
+comme les fonctions de calcul de puissance et de fréquence, qui ne s'appuient
+que sur les échantillons du canal droit. Le système revient ensuite à l'attente
+d'une nouvelle transition sur \verb|i_lrc|.
 
 
 \todo{Validation via une simulation avec le banc de test fourni. Vous devez démontrer le
