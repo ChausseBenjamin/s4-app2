@@ -1,17 +1,84 @@
 \section{Module M1}
+\quicktable{Plan de vérification du module M1 -- décodeur I2S}{test}{p{4cm}p{5cm}p{6cm}l}{
+
+  \toprule
+  \textbf{Objectif Ciblé} & & \textbf{Valider la MEF décodeur I2S} & \\
+  Condition à proscrire & Aucune & & \\
+  \midrule
+  \textbf{Test} & \textbf{Action} & \textbf{Résultat attendus} & \cboxtick{} \\
+  \midrule
+
+  Condition initiale
+  & Aucune
+  & Les registres et échantillons sont à $0$.
+  & \cbox{} \\
+
+  Reset initial
+  & \texttt{BTN3} à $1$
+  & Les registres restent à $0$ peut importe la valeur des échantillons.
+  & \cbox{} \\
+
+  Envoie répétitif du même code au même channel. (droite)
+  & Envoie de 4x \texttt{0xF0F0F0} au channel droit (.txt)
+  & \texttt{0xF0F0F0} est lu sur le registre de droit pour la durée de 4 affichages.
+  & \cbox{} \\
+
+  Envoie répétitif du même code au même channel. (gauche)
+  & Envoie de 4x \texttt{0xF0F0F0} au channel gauche (.txt)
+  & \texttt{0xF0F0F0} est lu sur le registre de gauche pour la durée de 4 affichages.
+  & \cbox{} \\
+
+  Test de messages mix (droite)
+  & Envoie de suites d'ondes à fréquences qui augmentent au channel droit (.txt)
+  & Les échantillons sont présentés à la sortie du registre de droit sans changement.
+  & \cbox{} \\
+
+  Test de messages mix (gauche)
+  & Envoie de suites d'ondes à puissances qui augmentent au channel gauche (.txt)
+  & Les échantillons sont présentés à la sortie du registre de gauche sans changement.
+  & \cbox{} \\
+
+  Test de reset en pleine lecture
+  & Envoie d'onde constantes aux deux channels, appui sur BTN3 en pleine lecture.
+  & Les sorties des registres tombent à 0. La lecture recommence lorsque \texttt{LRC} change de front.
+  & \cbox{} \\
+
+\bottomrule
+}
+
+\quickfigure{Machine à états finis du module M1}{mef-m1}{}{assets/m1-mef-mermaid.pdf}
 
 \note{votre lecteur ne connait pas votre démarche ni
-pourquoi un tel résultat démontre le bon fonctionnement – vous devez l’expliquez brièvement.}
+pourquoi un tel résultat démontre le bon fonctionnement – vous devez l'expliquez brièvement.}
 
 \note{Nous ne consulterons pas le dépôt de vos fichiers Xilinx (sauf
 dans des cas particuliers) ce qui signifie que votre rapport doit être complet en lui-même.}
 
-\todo{Description du fonctionnement du décodeur avec court texte approprié se basant sur
-le schéma-bloc fourni (il n’est pas nécessaire de l’inclure dans le rapport)}
+\subsection{Description du fonctionnement}
 
-\todo{Diagramme d’états de la MEF}
+Le décodeur I2S détecte et extrait les échantillons stéréo (gauche et droite)
+transmis en série par le CODEC audio via le protocole I2S. Son
+fonctionnement repose sur une machine à états finis synchronisée par
+l'horloge bit \verb|i_bclk|.\\
 
-\todo{Plan de vérification}
+Le module débute dans l'état \verb|awaiting_lrc_front_change|, où il détecte
+une transition sur le signal de sélection de mot \verb|i_lrc|, indiquant le
+début d'un nouveau mot audio (24 bits). Lorsqu'une transition est détectée,
+le compteur de bits est réinitialisé, et l'état passe à
+\verb|reading_24bit_word|.\\
+
+Dans cet état, les bits sont captés en série à chaque front d'horloge et
+décalés dans un registre. Une fois les 23 premiers bits lus (le bit 0 étant
+le premier), le décodeur passe à l'état \verb|saving_received_word|, où il
+déclenche le chargement du mot complet dans un registre parallèle : vers
+\verb|o_load_left| si le mot correspond au canal gauche (\verb|i_lrc| = 0),
+ou vers \verb|o_load_right| si c'est le canal droit (\verb|i_lrc| = 1). \\
+
+Finalement, l'état \verb|setting_str_dat| produit une impulsion de validation
+(\verb|o_str_dat|) avant de revenir à l'attente d'un nouveau mot. Ce fonctionnement
+assure une synchronisation robuste et un découpage clair entre la détection,
+la réception et l'enregistrement des données audio. \\
+
 
 \todo{Validation via une simulation avec le banc de test fourni. Vous devez démontrer le
 fonctionnement de vos modules au travers de simulations et expliquez en quoi vous

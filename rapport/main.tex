@@ -1,6 +1,6 @@
 \documentclass[a11paper]{article}
+% xelatex
 
-\usepackage{karnaugh-map}
 \usepackage{subcaption}
 \usepackage{tabularx}
 \usepackage{titlepage}
@@ -11,6 +11,7 @@
 \usepackage{varwidth}
 \usepackage{graphicx}
 \usepackage{siunitx}
+\usepackage{pifont}
 % \usepackage[toc,page]{appendix}
 \usepackage[usenames,dvipsnames]{xcolor}
 
@@ -19,7 +20,7 @@
 \class{Logique Combinatoire}
 \classnb{GEN420 \& GEN430}
 
-\teacher{Marwan Besrour \& Gabriel Bélanger}
+\teacher{Berthié Gouin-Ferland \& Nikola Zelovic}
 
 \author{
   \addtolength{\tabcolsep}{-0.4em}
@@ -34,17 +35,60 @@
 \newcommand{\fixme}[1]{\begin{color}{Fuchsia}\textbf{FIXME:} #1\end{color}}
 \newcommand{\question}[1]{\begin{color}{ForestGreen}\textbf{QUESTION:} #1\end{color}}
 
+% \newcommand{\cbox}[1][\relax]{\bgroup\setlength{\fboxsep}{4pt}\setlength{\fboxrule}{0.5pt}\fbox{}\egroup}
+
+% Checkboxes
+\setlength{\fboxsep}{1pt}
+\newcommand{\cbox}{\fbox{\phantom{\ding{51}}}}
+\newcommand{\cboxtick}{\fbox{\ding{51}}}%
+
+\newcommand{\quicktable}[4]{
+  \begin{table}[H]
+    \footnotesize
+    \centering
+    \caption{#1}
+    \label{tab:#2}
+    \begin{tabular}{#3}
+      #4
+    \end{tabular}
+  \end{table}
+}
+
+\newcommand{\quickfigure}[4]{
+  \begin{figure}[H]
+    \centering
+		\includegraphics[width=#3\textwidth]{#4}
+    \caption{#1}
+    \label{fig:#2}
+  \end{figure}
+}
+
 \begin{document}
 \maketitle
 \newpage
 \tableofcontents
 \newpage
 
-\note{Un total de 4 pages est permis, excluant la page titre, la table des matières, l’introduction,
+\note{Un total de 4 pages est permis, excluant la page titre, la table des matières, l'introduction,
 la conclusion et les références.}
+
+\section{Introduction}
+
+Dans le cadre de l'APP2 de la session S4, il est demandé de compléter le
+développement d'une pédale d'effets de guitare numérique à l'aide d'un FPGA
+sur la carte Zybo. Plus précisément, ce rapport documente la conception,
+l'implémentation et la vérification de deux modules essentiels au système:
+le décodeur I2S (M1), responsable de la désérialisation du signal audio reçu,
+et le module de calcul de la puissance du signal (M6). Ces travaux ont été
+réalisés en respectant les contraintes de synchronisation, de modularité et
+de formalisme en VHDL, selon les normes enseignées. Le rapport présente les
+diagrammes d'états, les schémas-blocs, les plans de vérification ainsi que
+les résultats de simulation attestant de la conformité fonctionnelle des
+modules développés.
 
 \input{module-M1.tex}
 \input{module-M6.tex}
 
+\section{Conclusion}
 
 \end{document}
