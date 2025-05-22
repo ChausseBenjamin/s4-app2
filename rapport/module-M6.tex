@@ -56,7 +56,36 @@ dans des cas particuliers) ce qui signifie que votre rapport doit être complet 
   \bottomrule
 }
 
-\quickfigure{Machine à états finis du module M6}{mef-m6}{}{assets/m6-mef-mermaid.pdf}
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}{.496\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{assets/chrono-m6-1000hz-sin-noisy.png}
+    \caption{Signal sinusoïdal bruité à \SI{1}{\kilo\hertz}}
+    \label{fig:chrono-m6-1000hz-sin-noisy}
+  \end{subfigure}
+  \begin{subfigure}{.496\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{assets/chrono-m6-reset-and-20000hz.png}
+    \caption{Post-réinitialisation et signal à \SI{20}{\kilo\hertz}}
+    \label{fig:chrono-m6-reset-and-20000hz}
+  \end{subfigure}
+  \begin{subfigure}{.496\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{assets/chrono-m6-saturation-works.png}
+    \caption{Saturation du module}
+    \label{fig:chrono-m6-saturation-works}
+  \end{subfigure}
+  \begin{subfigure}{.496\linewidth}
+    \centering
+    \includegraphics[width=\textwidth]{assets/chrono-m6-square-5000hz-2in1.png}
+    \caption{Signal carré à 5000 Hz avec deux canaux}
+    \label{fig:chrono-m6-square-5000hz-2in1}
+  \end{subfigure}
+  \caption{Chronographes du module M6 sous différentes conditions}
+\end{figure}
+
+% \quickfigure{Machine à états finis du module M6}{mef-m6}{}{assets/m6-mef-mermaid.pdf}
 
 \todo{Schéma-bloc du système}
 
