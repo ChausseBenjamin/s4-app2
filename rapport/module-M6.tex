@@ -6,6 +6,56 @@ pourquoi un tel résultat démontre le bon fonctionnement – vous devez l'expli
 \note{Nous ne consulterons pas le dépôt de vos fichiers Xilinx (sauf
 dans des cas particuliers) ce qui signifie que votre rapport doit être complet en lui-même.}
 
+\quicktable{Plan de vérification du module M6 -- Calcul de puissance}{mef-m6}{p{4cm}p{5cm}p{6cm}l}{
+  \toprule
+  \textbf{Objectif Ciblé} &
+  & \multirow{2}{*}{\textbf{Valider la MEF calcul de puissance d'ondes}}
+  & \\
+  Condition à proscrire
+  & Ondes ayant une fréquence plus haute que \SI{24}{\kilo\hertz}
+  &
+  & \\
+  \midrule
+  \textbf{Test}
+  & \textbf{Action}
+  & \textbf{Résultat attendus}
+  & \cboxtick \\
+  \midrule
+  Condition initial
+  & Mettre les interrupteurs à 0010 et une onde sans amplitude
+  & La puissance en sortie reste à 0.
+  & \cbox\\
+  Reset initial
+  & \texttt{BTN3} à 1 et onde sans amplitude.
+  & La valeur de la puissance devient 0 et reste à 0 après.
+  & \cbox\\
+  Test d'une onde sinuosïdale
+  & Mettre une onde sinus de \SI{1}{\kilo\hertz}. À amplitude maximum
+  & La puissance augmente vers le maximum et reste stable.
+  & \cbox\\
+  Test d'une onde sinuosïdale avec bruit
+  & Mettre une onde sinus de \SI{1}{\kilo\hertz} avec un peu de bruit. À amplitude maximum
+  & La puissance augmente vers le maximum et reste plus ou moins stable.
+  & \cbox\\
+  Test d'une onde Carré
+  & Mettre une onde carré de \SI{1}{\kilo\hertz} à amplitude maximum
+  & La puissance augmente vers le maximum et reste stable. Observation de divots lors de changement de signe.
+  & \cbox\\
+  Test de haute fréquences
+  & Mettre une onde sinus de \SI{20}{\kilo\hertz}
+  & La puissance oscille en fonction de l'amplitude du signal.
+  & \cbox\\
+  Test de saturation
+  & Un signal d'amplitude maximum envoyé en continue
+  & La puissance atteint le maximum après quelques échantillons et aucun overflow se produit.
+  & \cbox\\
+  Test d'amplitude fix basse
+  & Onde carrée d'amplitude 0.5 à -0.5 envoyé en entrée
+  & la puissance atteint la moitié du maximum après quelques échantillons
+  & \cbox\\
+  \bottomrule
+}
+
 \quickfigure{Machine à états finis du module M6}{mef-m6}{}{assets/m6-mef-mermaid.pdf}
 
 \todo{Schéma-bloc du système}

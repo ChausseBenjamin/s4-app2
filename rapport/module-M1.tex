@@ -1,47 +1,47 @@
 \section{Module M1}
-\quicktable{Plan de vérification du module M1 -- décodeur I2S}{test}{p{4cm}p{5cm}p{6cm}l}{
+\quicktable{Plan de vérification du module M1 -- décodeur I2S}{mef-m1}{p{4cm}p{5cm}p{6cm}l}{
 
   \toprule
   \textbf{Objectif Ciblé} & & \textbf{Valider la MEF décodeur I2S} & \\
   Condition à proscrire & Aucune & & \\
   \midrule
-  \textbf{Test} & \textbf{Action} & \textbf{Résultat attendus} & \cboxtick{} \\
+  \textbf{Test} & \textbf{Action} & \textbf{Résultat attendus} & \cboxtick \\
   \midrule
 
   Condition initiale
   & Aucune
   & Les registres et échantillons sont à $0$.
-  & \cbox{} \\
+  & \cbox \\
 
   Reset initial
   & \texttt{BTN3} à $1$
   & Les registres restent à $0$ peut importe la valeur des échantillons.
-  & \cbox{} \\
+  & \cbox \\
 
   Envoie répétitif du même code au même channel. (droite)
   & Envoie de 4x \texttt{0xF0F0F0} au channel droit (.txt)
   & \texttt{0xF0F0F0} est lu sur le registre de droit pour la durée de 4 affichages.
-  & \cbox{} \\
+  & \cbox \\
 
   Envoie répétitif du même code au même channel. (gauche)
   & Envoie de 4x \texttt{0xF0F0F0} au channel gauche (.txt)
   & \texttt{0xF0F0F0} est lu sur le registre de gauche pour la durée de 4 affichages.
-  & \cbox{} \\
+  & \cbox \\
 
   Test de messages mix (droite)
   & Envoie de suites d'ondes à fréquences qui augmentent au channel droit (.txt)
   & Les échantillons sont présentés à la sortie du registre de droit sans changement.
-  & \cbox{} \\
+  & \cbox \\
 
   Test de messages mix (gauche)
   & Envoie de suites d'ondes à puissances qui augmentent au channel gauche (.txt)
   & Les échantillons sont présentés à la sortie du registre de gauche sans changement.
-  & \cbox{} \\
+  & \cbox \\
 
   Test de reset en pleine lecture
   & Envoie d'onde constantes aux deux channels, appui sur BTN3 en pleine lecture.
   & Les sorties des registres tombent à 0. La lecture recommence lorsque \texttt{LRC} change de front.
-  & \cbox{} \\
+  & \cbox \\
 
 \bottomrule
 }
