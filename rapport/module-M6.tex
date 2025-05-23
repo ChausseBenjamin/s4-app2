@@ -31,27 +31,27 @@ dans des cas particuliers) ce qui signifie que votre rapport doit être complet 
   & \cbox\\
   Test d'une onde sinuosïdale
   & Mettre une onde sinus de \SI{1}{\kilo\hertz}. À amplitude maximum
-  & La puissance augmente vers le maximum et reste stable.
+  & La puissance augmente et oscille en suivant l'amplitude du signal d'entrée
   & \cbox\\
-  Test d'une onde sinuosïdale avec bruit
+  Test d'une onde sinusoïdale avec bruit
   & Mettre une onde sinus de \SI{1}{\kilo\hertz} avec un peu de bruit. À amplitude maximum
-  & La puissance augmente vers le maximum et reste plus ou moins stable.
+  & La puissance augmente et oscille a la même fréquence que le signal d'entrée. Observation d'atténuation du bruit.
   & \cbox\\
   Test d'une onde Carré
   & Mettre une onde carré de \SI{1}{\kilo\hertz} à amplitude maximum
-  & La puissance augmente vers le maximum et reste stable. Observation de divots lors de changement de signe.
+  & La puissance augmente vers le maximum et reste stable.
   & \cbox\\
   Test de haute fréquences
   & Mettre une onde sinus de \SI{20}{\kilo\hertz}
-  & La puissance oscille en fonction de l'amplitude du signal.
+  & La puissance oscille en fonction de l'amplitude du signal. la valeur de la puissance reste en moyenne plus haute que l'onde de \SI{1000}{\hertz} (à cause de l'accumulation).
   & \cbox\\
   Test de saturation
   & Un signal d'amplitude maximum envoyé en continue
-  & La puissance atteint le maximum après quelques échantillons et aucun overflow se produit.
+  & La puissance atteint le maximum après quelques échantillons et aucun débordement se produit.
   & \cbox\\
   Test d'amplitude fix basse
   & Onde carrée d'amplitude 0.5 à -0.5 envoyé en entrée
-  & la puissance atteint la moitié du maximum après quelques échantillons
+  & la puissance atteint la moitié du maximum après quelques échantillons et reste stable
   & \cbox\\
   \bottomrule
 }
@@ -107,8 +107,6 @@ Le résultat final est stocké dans le registre \verb|oldest_power|. Pour
 simplifier l'affichage ou l'utilisation de cette puissance, seuls les bits de
 poids fort (\verb|oldest_power(46 downto 39)|) sont extraits et envoyés sur
 la sortie \verb|o_param|. \\
-
-\\
 
 Le fonctionnement réponds plus ou moins aux spécifications. À cause de la méthode utilisé, la mesure de la puissance ne se stabilise pas assez lentement pour donner un nombre fixes à des basses fréquences (chronogramme A). Cependant ce chronogramme démontre la résistance au bruit. Le chronogramme B démontre le bon fonctionnement du reset (le tout reste à zéro jusqu’à la relâche du signal en rouge). Le chronogramme C démontre que le calcul monte tranquillement vers le maximum (prouvant l'utilisation d'accumulation) et n'éprouve aucun dépassement restant stable. Le chronogramme D démontre que la puissance reste stable et s'adapte aux changements d'amplitude du signal entrant dans le module. Le chronogramme B à une sinus à l'entrée, mais le graphique à été réalisé avec la fonction d'affichage « hold » se qui donne l'impression d'une onde carré. Les spécification sont donc atteinte car un facteur de 31/32 est utilisée et une accumulation en continue est présente. Cependant, l'angle d'approche serait à revoir afin d'avoir des lectures stables avec des ondes sinusoïdales.
 
