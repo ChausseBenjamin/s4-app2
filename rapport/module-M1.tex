@@ -113,12 +113,13 @@ que sur les échantillons du canal droit. Le système revient ensuite à l'atten
 d'une nouvelle transition sur \verb|i_lrc|.\\
 
 Les chronogrammes fournis ont été fait à l'aide du banc de test fourni. Quelques noms de certains signaux ont été changés afin d'être intuitif. 
-Le chronogramme A démontre l'activation du bon registre \verb|o_load_right| si \verb|lrc| est à $1$ et le tout dans les bons états (jaune). Le chronogramme B 
-démontre à l'aide de curseur les moments précis ou la lecture sur 24 bits est effectués. Autrement dit, un cycle complet de la machine à états. Ont voit le 
-changement de LRC et la lecture qui commence une monté d'horloge plus loin. Le chronogramme C démontre que les signaux qui sorte du décodeur sont les mêmes
-que les signaux qui entre dans le banc de test. Le décalage des ondes s'explique par le fait qu'elles doivent passé dans le codeur avant le décodeur et ces
-exécutions prennent plusieurs coup d'horloge de délai. Finalement, le chronogramme A démontre le fonctionnement du reset. Tout est à zéro temps que le bouton
-est appuyé et la lecture recommence uniquement lors du changement de LRC après l'arrêt du signal de reset.
+\ref{fig:chrono-m1-param-enable-reg-activation-return-await} démontre l'activation du bon registre \verb|o_load_right| si \verb|lrc| est à $1$ et le tout dans les bons états (jaune). 
+\ref{fig:chrono-m1-detect-change-LRC-save-output-to-channel} démontre à l'aide de curseur les moments précis ou la lecture sur 24 bits est effectués. 
+Autrement dit, un cycle complet de la machine à états. Ont voit le changement de LRC et la lecture qui commence une monté d'horloge plus loin. 
+\ref{fig:chrono-m1-input-becomes-output} démontre que les signaux qui sorte du décodeur sont les mêmes que les signaux qui entre dans le banc de test. 
+Le décalage des ondes s'explique par le fait qu'elles doivent passé dans le codeur avant le décodeur et ces exécutions prennent plusieurs coup d'horloge de délai.
+Finalement, la figure \ref{fig:chrono-m1-reset-works-awaits-LRC-change} démontre le fonctionnement du reset. Tout est à zéro temps que le bouton est appuyé et 
+la lecture recommence uniquement lors du changement de LRC après l'arrêt du signal de reset.
 
 \todo{Validation via une simulation avec le banc de test fourni. Vous devez démontrer le
 fonctionnement de vos modules au travers de simulations et expliquez en quoi vous
