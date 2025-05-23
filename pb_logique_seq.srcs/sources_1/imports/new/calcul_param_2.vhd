@@ -156,6 +156,8 @@ begin
     begin
         if i_reset = '1' then -- reset the rolling average
             oldest_power <= (others => '0');
+            most_recent_power <= (others => '0');
+            factored_old_power <= (others => '0');
             o_param <= (others => '0');
         else
             if rising_edge(i_bclk) and (i_en = '1') then -- we're receiving a new sample and must calculate a rolling average!
