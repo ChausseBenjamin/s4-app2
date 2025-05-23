@@ -104,7 +104,7 @@ Finalement, l'état bascule à \verb|setting_str_dat| et active le signal \verb|
 appartient au canal droit. Ce signal sert à synchroniser les modules en aval,
 comme les fonctions de calcul de puissance et de fréquence, qui ne s'appuient
 que sur les échantillons du canal droit. Le système revient ensuite à l'attente
-d'une nouvelle transition sur \verb|i_lrc|.
+d'une nouvelle transition sur \verb|i_lrc|.\\
 
 Les chronogrammes fournis ont été fait à l'aide du banc de test fourni. Quelques noms de certains signaux ont été changés afin d'être intuitif. Le chronogramme A démontre l'activation du bon registre \verb|o_load_right| si \verb|lrc| est à $1$ et le tout dans les bons états (jaune). Le chronogramme B démontre à l'aide de curseur les moments précis ou la lecture sur 24 bits est effectués. Autrement dit, un cycle complet de la machine à états. Ont voit le changement de LRC et la lecture qui commence une monté d'horloge plus loin. Le chronogramme C démontre que les signaux qui sorte du décodeur sont les mêmes que les signaux qui entre dans le banc de test. Le décalage des ondes s'explique par le fait qu'elles doivent passé dans le codeur avant le décodeur et ces exécutions prennent plusieurs coup d'horloge de délai. Finalement, le chronogramme D démontre le fonctionnement du reset. Tout est à zéro temps que le bouton est appuyé et la lecture recommence uniquement lors du changement de LRC après l'arrêt du signal de reset.
 
